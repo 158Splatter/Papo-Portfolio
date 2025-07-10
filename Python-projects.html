@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Papo Productions</title>
+  <link rel="icon" type="image/png" href="images/Other/HiPaint_1739457783200.png" />
+  <link rel="stylesheet" href="Common_Design.css" />
+
+  <!-- Pyodide -->
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+
+  <!-- Prism for syntax highlighting -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css"
+    rel="stylesheet"
+  />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav>
+    <ul>
+      <li><a href="index.html">Homepage</a></li>
+      <li><a href="Pixel_Art.html">Pixel Art</a></li>
+      <li><a href="Music_Production.html">Music Production</a></li>
+      <li><a href="Game_Development.html">Game Development</a></li>
+      <li><a href="Python-projects.html">Python</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <!-- Greet user example -->
+    <section>
+      <h2>Example: Greet User</h2>
+      <pre><code class="language-python">
+name = input("Enter your name:\n")
+print(f"Hello, {name}!")
+      </code></pre>
+
+      <label for="userInput">Name:</label>
+      <input type="text" id="userInput" placeholder="Enter your name" />
+      <button onclick="runPython()">Run</button>
+
+      <pre id="output"></pre>
+    </section>
+
+    <!-- Nth Root Section -->
+    <section>
+      <h2>Find nth Roots (Basic Version)</h2>
+
+      <!-- Code shown using Prism -->
+      <pre><code class="language-python" id="codeDisplay"></code></pre>
+
+      <!-- Input and Run -->
+      <label for="rootInput">Enter a number (digit or word):</label>
+      <input type="text" id="rootInput" placeholder="e.g. 64 or sixteen" />
+      <button onclick="runNthRoot()">Run</button>
+
+      <!-- Output -->
+      <pre id="rootOutput"></pre>
+
+      <!-- Hidden Template with Python code -->
+      <script type="text/template" id="nthRootCode">
+<!-- import math
+
+number = "{INPUT}".strip().lower()
+
+try:
+    value = float(number)
+except:
+    words_to_numbers = {
+        "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
+        "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10,
+        "sixteen": 16, "twenty": 20, "thirty": 30, "forty": 40,
+        "fifty": 50, "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90, "hundred": 100
+    }
+    value = words_to_numbers.get(number, None)
+
+if value:
+    x = math.log10(value)
+    found = False
+    for y in range(2, int(value) + 1):
+        Y = math.log10(y)
+        n = x / Y
+        if abs(n - round(n)) < 0.0001:
+            print(f"{y} ** {round(n)} = {int(value)}")
+            found = True
+            
+    if not found:
+        print("No integer root found.")
+else:
+    print("Invalid input.") -->
+      </script>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Emily Mallia</p>
+  </footer>
+
+  <!-- JavaScript Section -->
+ <script>
+  let pyodideReady = loadPyodide();
+
+  // Redirect Python print output to JavaScript
+  async function runPython() {
+    const pyodide = await pyodideReady;
+    const name = document.getElementById("userInput").value;
+
+    const pythonCode = `
+import sys
+import io
+sys.stdout = io.StringIO()
+
+name = "${name}"
+print(f"Hello, {name}!")
+
+output = sys.stdout.getvalue()
+    `;
+
+    try {
+      await pyodide.runPythonAsync(pythonCode);
+      const result = pyodide.globals.get("output");
+      document.getElementById("output").textContent = result;
+    } catch (err) {
+      document.getElementById("output").textContent = "Error:\n" + err;
+    }
+  }
+
+  async function runNthRoot() {
+    const pyodide = await pyodideReady;
+    const input = document.getElementById("rootInput").value;
+
+    const codeTemplate = document.getElementById("nthRootCode").textContent;
+    const pythonCode = codeTemplate.replace("{INPUT}", input);
+
+    const wrappedCode = `
+import sys
+import io
+sys.stdout = io.StringIO()
+
+${pythonCode}
+
+output = sys.stdout.getvalue()
+    `;
+
+    try {
+      await pyodide.runPythonAsync(wrappedCode);
+      const result = pyodide.globals.get("output");
+      document.getElementById("rootOutput").textContent = result;
+    } catch (err) {
+      document.getElementById("rootOutput").textContent = "Error:\n" + err;
+    }
+  }
+
+  // Load Prism code display
+  document.addEventListener("DOMContentLoaded", () => {
+    const code = document.getElementById("nthRootCode").textContent.trim();
+    document.getElementById("codeDisplay").textContent = code;
+    Prism.highlightAll();
+  });
+</script>
+
+  </script>
+</body>
+</html>

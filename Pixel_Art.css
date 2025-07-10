@@ -1,0 +1,13 @@
+.image-row {
+  display: flex;
+  gap: 1px;
+  justify-content: center;
+  align-content: center;
+}
+
+.image-row img {
+    width: 300px;
+    height: auto;
+    padding: 0;
+    margin: 0;
+}
