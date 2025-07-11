@@ -2,12 +2,109 @@
   display: flex;
   gap: 1px;
   justify-content: center;
-  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  /*flex-direction: row;*/
 }
 
 .image-row img {
-    width: 300px;
-    height: auto;
-    padding: 0;
-    margin: 0;
+  width: 300px;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  /* transform: translate(50px, 50px); */
 }
+
+.backgroundgob {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  gap: 25px;
+  border-radius: 25px;
+  padding: 10px;
+}
+
+.idle-rabbit {
+  background-color: white;
+  padding: 10px;
+  border-radius: 25px;
+}
+
+.Keyboard {
+  background-color: white;
+  padding: 10px;
+  border-radius: 25px;
+}
+
+
+
+/* .backgroundrabbit {
+  background-color: white;
+  border-radius: 25px;
+  padding: 10px;
+  width: auto;
+}
+
+.backgroundkeyboard {
+  background-color: white;
+  border-radius: 25px;
+  padding: 10px;
+  width: auto;
+} */
+
+
+.rounded-img {
+  border-radius: 50px;
+}
+
+img {
+  padding: 0px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* -- Transformations -- */
+
+
+
+
+
+
+
+
+
+/* .rounded-img {
+  transform:translate(-350px, 75px);
+}
+
+.image-row {
+  transform:translate(350px, -75px);
+}
+
+.Keyboard {
+  transform: translate(-350px, -150px);
+}
+
+.idle-rabbit {
+  transform:translate(350px, -225px);
+} */
+
+
+
+
+
+
+/* #round-the-corners {
+  border-radius: 25px;
+  background: url(Images/Other/HiPaint_1739457783200.png);
+  background-position: left top;
+  background-repeat: repeat;
+  padding: 20px;
+  width: 600px;
+  height: 300px;
+  overflow: hidden; 
+} */
+
+
+/* make the pink image rounded corners add padding to the images add seperation in between the backround and the images. images in circles and the backround is another colour like tan or off white warm */
